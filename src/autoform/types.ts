@@ -2,7 +2,7 @@ interface WithHint {
     hint?: string
 }
 
-interface String extends WithHint {
+interface AString extends WithHint {
     type: 'string'
     default?: string
     validate?: (value: string) => {
@@ -11,7 +11,7 @@ interface String extends WithHint {
     }
 }
 
-interface Number extends WithHint {
+interface ANumber extends WithHint {
     type: 'number'
     default?: number
     validate?: (value: number) => {
@@ -20,40 +20,76 @@ interface Number extends WithHint {
     }
 }
 
-interface BoundedNumber extends WithHint {
+interface ABoundedNumber extends WithHint {
     type: 'bounded-number'
     min: number
     max: number
     default?: number
 }
 
-interface Form extends WithHint {
+interface AForm extends WithHint {
     type: 'form'
     child: {
-        [k: string] : FormElement
+        [k: string] : AElement
     }
 }
 
-type FormElement
-    = String
-    | Number
-    | BoundedNumber
-    | Form
+type AElement
+    = AString
+    | ANumber
+    | ABoundedNumber
+    | AForm
 
-type ReturnValue<FormElement> =
-    FormElement extends String ? string :
-    FormElement extends Number ? number :
-    FormElement extends BoundedNumber ? number :
-    FormElement extends Form ? {
-        [k in keyof FormElement['child']]: ReturnValue<FormElement['child'][k]>
+type ReturnValue<AElement> =
+    AElement extends AString ? string :
+    AElement extends ANumber ? number :
+    AElement extends ABoundedNumber ? number :
+    AElement extends AForm ? {
+        [k in keyof AElement['child']]: ReturnValue<AElement['child'][k]>
     } : never
 
-
 export type {
-    String,
-    Number,
-    BoundedNumber,
-    Form,
-    FormElement,
+    AString,
+    ANumber,
+    ABoundedNumber,
+    AForm,
+    AElement,
     ReturnValue
+}
+
+function isAString(obj: any): obj is AString {
+    return obj.type === 'string'
+}
+
+function isANumber(obj: any): obj is ANumber {
+    return obj.type === 'number'
+}
+
+function isABoundedNumber(obj: any): obj is ABoundedNumber {
+    return obj.type === 'bounded-number'
+        && obj.max !== undefined
+        && obj.min !== undefined
+}
+
+function isAForm(obj: any): obj is AForm {
+    if (! obj.child)
+        return false
+    if (obj.type !== 'form')
+        return false
+    for (let i of Object.keys(obj.child))
+        if (! isAElement(obj.child[i]))
+            return false
+    return true
+}
+
+function isAElement(obj: any): obj is AElement {
+    return isAString(obj) || isANumber(obj) || isABoundedNumber(obj) || isAForm(obj)
+}
+
+export {
+    isAString,
+    isANumber,
+    isABoundedNumber,
+    isAForm,
+    isAElement
 }
