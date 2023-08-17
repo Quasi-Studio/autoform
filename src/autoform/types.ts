@@ -11,20 +11,9 @@ interface AString extends WithHint {
     }
 }
 
-interface ANumber extends WithHint {
-    type: 'number'
-    default?: number
-    validate?: (value: number) => {
-        isValid: boolean
-        message?: string
-    }
-}
-
-interface ABoundedNumber extends WithHint {
-    type: 'bounded-number'
-    min: number
-    max: number
-    default?: number
+interface ASelect extends WithHint {
+    type: 'select'
+    option: string[]
 }
 
 interface AForm extends WithHint {
@@ -36,22 +25,19 @@ interface AForm extends WithHint {
 
 type AElement
     = AString
-    | ANumber
-    | ABoundedNumber
+    | ASelect
     | AForm
 
 type ReturnValue<AElement> =
     AElement extends AString ? string :
-    AElement extends ANumber ? number :
-    AElement extends ABoundedNumber ? number :
+    AElement extends ASelect ? string :
     AElement extends AForm ? {
         [k in keyof AElement['child']]: ReturnValue<AElement['child'][k]>
     } : never
 
 export type {
     AString,
-    ANumber,
-    ABoundedNumber,
+    ASelect,
     AForm,
     AElement,
     ReturnValue
@@ -61,14 +47,8 @@ function isAString(obj: any): obj is AString {
     return obj.type === 'string'
 }
 
-function isANumber(obj: any): obj is ANumber {
-    return obj.type === 'number'
-}
-
-function isABoundedNumber(obj: any): obj is ABoundedNumber {
-    return obj.type === 'bounded-number'
-        && obj.max !== undefined
-        && obj.min !== undefined
+function isASelect(obj: any): obj is ASelect {
+    return obj.type === 'select' && obj.option instanceof Array
 }
 
 function isAForm(obj: any): obj is AForm {
@@ -83,13 +63,12 @@ function isAForm(obj: any): obj is AForm {
 }
 
 function isAElement(obj: any): obj is AElement {
-    return isAString(obj) || isANumber(obj) || isABoundedNumber(obj) || isAForm(obj)
+    return isAString(obj) || isASelect(obj) || isAForm(obj)
 }
 
 export {
     isAString,
-    isANumber,
-    isABoundedNumber,
+    isASelect,
     isAForm,
     isAElement
 }

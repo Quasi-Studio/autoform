@@ -9,9 +9,16 @@ export default defineComponent({
   name: 'App'
 });
 
+// let af = new AutoForm({
+//   type: 'string',
+//   hint: 'This is a hint'
+// })
+
 let af = new AutoForm({
-  type: 'string',
-  hint: 'This is a hint'
+  type: 'select',
+  option: [
+    '123', '234', '345'
+  ]
 })
 
 af.inject(document.getElementById('apppppp') as HTMLDivElement)
