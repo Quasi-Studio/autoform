@@ -3,13 +3,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import { inject } from './vf'
+import { AutoForm } from './autoform/autoform'
 
 export default defineComponent({
   name: 'App'
 });
 
-// inject('apppppp')
+let af = new AutoForm({
+  type: 'string',
+  hint: 'This is a hint'
+})
+
+af.inject(document.getElementById('apppppp') as HTMLDivElement)
 
 </script>
 

@@ -11,12 +11,16 @@ class AutoForm {
     inject(el: HTMLDivElement): void {
         let inject_string = (el: HTMLDivElement, template: AString) => {
             el.classList.add('mdui-textfield', 'mdui-textfield-floating-label')
+            
             let label = document.createElement('label')
             label.classList.add('mdui-textfield-label')
             if (template.hint)
                 label.innerText = template.hint
+            el.appendChild(label)
+
             let input = document.createElement('input')
             input.classList.add('mdui-textfield-input')
+            el.appendChild(input)
         }
         if (isAString(this.template))
             inject_string(el, this.template)
