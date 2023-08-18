@@ -21,9 +21,22 @@ export default defineComponent({
 //   ]
 // })
 
+// let af = new AutoForm({
+//   type: 'checkbox',
+//   label: 'Check up'
+// })
+
 let af = new AutoForm({
-  type: 'checkbox',
-  label: 'Check up'
+  type: 'form',
+  child: {
+    input1: {
+      type: 'input'
+    },
+    checkbox1: {
+      type: 'checkbox',
+      label: '123'
+    }
+  }
 })
 
 af.init(document.getElementById('apppppp') as HTMLDivElement)

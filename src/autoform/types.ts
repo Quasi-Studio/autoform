@@ -30,9 +30,14 @@ interface ElACheckbox extends ElBase  {
 type ChildOfAForm<T extends AForm> =
     T extends AForm<infer Child> ? Child : never;
 
+interface ElAFormChild<T> extends ElBase {
+    el: T
+    label: HTMLLabelElement
+}
+
 interface ElAForm<Child extends Record<string, ABase> = Record<string, ABase>> extends ElBase {
     child: {
-        [K in keyof Child]: AMap[Child[K]["type"]][1]
+        [K in keyof Child]: ElAFormChild<AMap[Child[K]["type"]][1]>
     }
 }
 
@@ -91,7 +96,8 @@ export type {
     ASelect,
     ACheckbox,
     AForm,
-    ReturnValue
+    ReturnValue,
+    ChildOfAForm
 }
 
 function isAInput(obj: any): obj is AInput {
@@ -118,7 +124,7 @@ function isAForm(obj: any): obj is AForm {
 }
 
 function isAElement(obj: any): obj is ABase {
-    return isAInput(obj) || isASelect(obj) || isAOption(obj) || isAForm(obj)
+    return isAInput(obj) || isASelect(obj) || isACheckbox(obj) || isAForm(obj)
 }
 
 export {

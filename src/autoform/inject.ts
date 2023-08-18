@@ -1,4 +1,4 @@
-import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput, ACheckbox, ElACheckbox, isACheckbox } from "./types"
+import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput, ACheckbox, ElACheckbox, isACheckbox, AForm, ElAForm, isAForm } from "./types"
 
 function inject_input(template: AInput): ElAInput {
     let div = document.createElement('div')
@@ -63,6 +63,39 @@ function inject_checkbox(template: ACheckbox): ElACheckbox {
     }
 }
 
+function inject_form<T extends Record<string, ABase>>(template: AForm<T>): ElAForm<T> {
+    let div = document.createElement('div')
+    div.classList.add('md-form')
+
+    let child = {}
+
+    for (let el in template.child) {
+        let s_div = document.createElement('div')
+        s_div.classList.add('md-form-item')
+        div.appendChild(s_div)
+
+        let label = document.createElement('label')
+        label.classList.add('mdui-label')
+        if (template.child[el].caption)
+            label.innerText = template.child[el].caption!
+        s_div.appendChild(label)
+
+        let s_el = inject(template.child[el])
+        s_div.appendChild(s_el.div)
+        // @ts-ignore
+        child[el as string] = {
+            div, label,
+            el: s_el
+        }
+    }
+    
+    return {
+        div,
+        // @ts-ignore
+        child
+    }
+}
+
 function inject<T extends ABase>(template: T): ElTree<T> {
     if (isAInput(template))
         return inject_input(template)
@@ -70,6 +103,8 @@ function inject<T extends ABase>(template: T): ElTree<T> {
         return inject_select(template)
     if (isACheckbox(template))
         return inject_checkbox(template)
+    if (isAForm(template))
+        return inject_form(template)
     throw new Error('Not implemented')
 }
 
