@@ -1,45 +1,93 @@
-interface WithHint {
-    hint?: string
+type AMap<Child extends Record<string, ABase> = Record<string, ABase>> = {
+    string: [AString, ElAString, string],
+    select: [ASelect, ElASelect, string],
+    option: [AOption, ElAOption, boolean],
+    form: [AForm, ElAForm, {
+        [K in keyof Child]: AMap[Child[K]["type"]][2]
+    }]
 }
 
-interface AString extends WithHint {
+interface ElAString {
+    div: HTMLDivElement
+    label: HTMLLabelElement
+    input: HTMLInputElement
+}
+
+interface ElASelect {
+    div: HTMLDivElement
+    select: HTMLSelectElement
+    option: HTMLOptionElement[]
+}
+
+interface ElAOption {
+    // TODO
+}
+
+type ChildOfAForm<T extends AForm> =
+    T extends AForm<infer Child> ? Child : never;
+
+interface ElAForm<Child extends Record<string, ABase> = Record<string, ABase>> {
+    div: HTMLDivElement
+    child: {
+        [K in keyof Child]: AMap[Child[K]["type"]][1]
+    }
+}
+
+type ElAElement
+    = ElAString
+    | ElASelect
+    | ElAOption
+    | ElAForm
+
+type ElTree<T extends ABase> = AMap[T['type']][1];
+
+export type {
+    ElAString,
+    ElASelect,
+    ElAOption,
+    ElAForm,
+    ElAElement,
+    ElTree
+}
+
+interface ABase {
+    type: keyof AMap;
+    caption?: string
+}
+
+interface AString extends ABase {
     type: 'string'
     default?: string
+    hint?: string
     validate?: (value: string) => {
         isValid: boolean
         message?: string
     }
 }
 
-interface ASelect extends WithHint {
+interface ASelect extends ABase {
     type: 'select'
     option: string[]
 }
 
-interface AForm extends WithHint {
-    type: 'form'
-    child: {
-        [k: string] : AElement
-    }
+interface AOption extends ABase {
+    type: 'option'
+    value: string
 }
 
-type AElement
-    = AString
-    | ASelect
-    | AForm
+interface AForm<Child extends Record<string, ABase> = Record<string, ABase>> extends ABase {
+    type: 'form'
+    child: Child
+}
 
-type ReturnValue<AElement> =
-    AElement extends AString ? string :
-    AElement extends ASelect ? string :
-    AElement extends AForm ? {
-        [k in keyof AElement['child']]: ReturnValue<AElement['child'][k]>
-    } : never
+type ReturnValue<T extends ABase> = AMap[T['type']][2]
 
 export type {
+    ABase,
     AString,
     ASelect,
+    AOption,
     AForm,
-    AElement,
     ReturnValue
 }
 
@@ -51,24 +99,29 @@ function isASelect(obj: any): obj is ASelect {
     return obj.type === 'select' && obj.option instanceof Array
 }
 
+function isAOption(obj: any): obj is AOption {
+    return obj.type === 'option'
+}
+
 function isAForm(obj: any): obj is AForm {
-    if (! obj.child)
+    if (!obj.child)
         return false
     if (obj.type !== 'form')
         return false
     for (let i of Object.keys(obj.child))
-        if (! isAElement(obj.child[i]))
+        if (!isAElement(obj.child[i]))
             return false
     return true
 }
 
-function isAElement(obj: any): obj is AElement {
-    return isAString(obj) || isASelect(obj) || isAForm(obj)
+function isAElement(obj: any): obj is ABase {
+    return isAString(obj) || isASelect(obj) || isAOption(obj) || isAForm(obj)
 }
 
 export {
     isAString,
     isASelect,
+    isAOption,
     isAForm,
     isAElement
 }

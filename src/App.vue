@@ -21,7 +21,7 @@ let af = new AutoForm({
   ]
 })
 
-af.inject(document.getElementById('apppppp') as HTMLDivElement)
+af.init(document.getElementById('apppppp') as HTMLDivElement)
 
 </script>
 
