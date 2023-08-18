@@ -10,7 +10,7 @@ export default defineComponent({
 });
 
 let af = new AutoForm({
-  type: 'string',
+  type: 'input',
   hint: 'This is a hint'
 })
 

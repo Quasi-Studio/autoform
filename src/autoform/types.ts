@@ -1,5 +1,5 @@
 type AMap<Child extends Record<string, ABase> = Record<string, ABase>> = {
-    string: [AString, ElAString, string],
+    input: [AInput, ElAInput, string],
     select: [ASelect, ElASelect, string],
     option: [AOption, ElAOption, boolean],
     form: [AForm, ElAForm, {
@@ -11,7 +11,7 @@ interface ElBase {
     div: HTMLDivElement
 }
 
-interface ElAString extends ElBase {
+interface ElAInput extends ElBase {
     label: HTMLLabelElement
     input: HTMLInputElement
 }
@@ -35,7 +35,7 @@ interface ElAForm<Child extends Record<string, ABase> = Record<string, ABase>> e
 }
 
 type ElAElement
-    = ElAString
+    = ElAInput
     | ElASelect
     | ElAOption
     | ElAForm
@@ -43,7 +43,7 @@ type ElAElement
 type ElTree<T extends ABase> = AMap[T['type']][1];
 
 export type {
-    ElAString,
+    ElAInput,
     ElASelect,
     ElAOption,
     ElAForm,
@@ -56,8 +56,8 @@ interface ABase {
     caption?: string
 }
 
-interface AString extends ABase {
-    type: 'string'
+interface AInput extends ABase {
+    type: 'input'
     default?: string
     hint?: string
     validate?: (value: string) => {
@@ -85,15 +85,15 @@ type ReturnValue<T extends ABase> = AMap[T['type']][2]
 
 export type {
     ABase,
-    AString,
+    AInput,
     ASelect,
     AOption,
     AForm,
     ReturnValue
 }
 
-function isAString(obj: any): obj is AString {
-    return obj.type === 'string'
+function isAInput(obj: any): obj is AInput {
+    return obj.type === 'input'
 }
 
 function isASelect(obj: any): obj is ASelect {
@@ -116,11 +116,11 @@ function isAForm(obj: any): obj is AForm {
 }
 
 function isAElement(obj: any): obj is ABase {
-    return isAString(obj) || isASelect(obj) || isAOption(obj) || isAForm(obj)
+    return isAInput(obj) || isASelect(obj) || isAOption(obj) || isAForm(obj)
 }
 
 export {
-    isAString,
+    isAInput,
     isASelect,
     isAOption,
     isAForm,

@@ -1,6 +1,6 @@
-import { ABase, ASelect, AString, ElASelect, ElAString, ElTree, isASelect, isAString } from "./types"
+import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput } from "./types"
 
-function inject_string(template: AString): ElAString {
+function inject_string(template: AInput): ElAInput {
     let div = document.createElement('div')
     div.classList.add('mdui-textfield', 'mdui-textfield-floating-label')
 
@@ -43,7 +43,7 @@ function inject_select(template: ASelect): ElASelect {
 }
 
 function inject<T extends ABase>(template: T): ElTree<T> {
-    if (isAString(template))
+    if (isAInput(template))
         return inject_string(template)
     if (isASelect(template))
         return inject_select(template)
