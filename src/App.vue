@@ -22,7 +22,7 @@ export default defineComponent({
 // })
 
 let af = new AutoForm({
-  type: 'option',
+  type: 'checkbox',
   label: 'Check up'
 })
 

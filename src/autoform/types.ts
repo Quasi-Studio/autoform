@@ -1,7 +1,7 @@
 type AMap<Child extends Record<string, ABase> = Record<string, ABase>> = {
     input: [AInput, ElAInput, string],
     select: [ASelect, ElASelect, string],
-    option: [AOption, ElAOption, boolean],
+    checkbox: [ACheckbox, ElACheckbox, boolean],
     form: [AForm, ElAForm, {
         [K in keyof Child]: AMap[Child[K]["type"]][2]
     }]
@@ -21,7 +21,7 @@ interface ElASelect extends ElBase {
     option: HTMLOptionElement[]
 }
 
-interface ElAOption extends ElBase  {
+interface ElACheckbox extends ElBase  {
     label: HTMLLabelElement
     input: HTMLInputElement
     i: HTMLElement
@@ -39,7 +39,7 @@ interface ElAForm<Child extends Record<string, ABase> = Record<string, ABase>> e
 type ElAElement
     = ElAInput
     | ElASelect
-    | ElAOption
+    | ElACheckbox
     | ElAForm
 
 type ElTree<T extends ABase> = AMap[T['type']][1];
@@ -47,7 +47,7 @@ type ElTree<T extends ABase> = AMap[T['type']][1];
 export type {
     ElAInput,
     ElASelect,
-    ElAOption,
+    ElACheckbox,
     ElAForm,
     ElAElement,
     ElTree
@@ -73,8 +73,8 @@ interface ASelect extends ABase {
     option: string[]
 }
 
-interface AOption extends ABase {
-    type: 'option'
+interface ACheckbox extends ABase {
+    type: 'checkbox'
     label: string
 }
 
@@ -89,7 +89,7 @@ export type {
     ABase,
     AInput,
     ASelect,
-    AOption,
+    ACheckbox,
     AForm,
     ReturnValue
 }
@@ -102,8 +102,8 @@ function isASelect(obj: any): obj is ASelect {
     return obj.type === 'select' && obj.option instanceof Array
 }
 
-function isAOption(obj: any): obj is AOption {
-    return obj.type === 'option'
+function isACheckbox(obj: any): obj is ACheckbox {
+    return obj.type === 'checkbox'
 }
 
 function isAForm(obj: any): obj is AForm {
@@ -124,7 +124,7 @@ function isAElement(obj: any): obj is ABase {
 export {
     isAInput,
     isASelect,
-    isAOption,
+    isACheckbox,
     isAForm,
     isAElement
 }

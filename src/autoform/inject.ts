@@ -1,6 +1,6 @@
-import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput, AOption, ElAOption, isAOption } from "./types"
+import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput, ACheckbox, ElACheckbox, isACheckbox } from "./types"
 
-function inject_string(template: AInput): ElAInput {
+function inject_input(template: AInput): ElAInput {
     let div = document.createElement('div')
     div.classList.add('mdui-textfield', 'mdui-textfield-floating-label')
 
@@ -42,7 +42,7 @@ function inject_select(template: ASelect): ElASelect {
     }
 }
 
-function inject_option(template: AOption): ElAOption {
+function inject_checkbox(template: ACheckbox): ElACheckbox {
     let div = document.createElement('div')
     
     let label = document.createElement('label')
@@ -65,11 +65,11 @@ function inject_option(template: AOption): ElAOption {
 
 function inject<T extends ABase>(template: T): ElTree<T> {
     if (isAInput(template))
-        return inject_string(template)
+        return inject_input(template)
     if (isASelect(template))
         return inject_select(template)
-    if (isAOption(template))
-        return inject_option(template)
+    if (isACheckbox(template))
+        return inject_checkbox(template)
     throw new Error('Not implemented')
 }
 
