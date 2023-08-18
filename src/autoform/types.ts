@@ -7,27 +7,28 @@ type AMap<Child extends Record<string, ABase> = Record<string, ABase>> = {
     }]
 }
 
-interface ElAString {
+interface ElBase {
     div: HTMLDivElement
+}
+
+interface ElAString extends ElBase {
     label: HTMLLabelElement
     input: HTMLInputElement
 }
 
-interface ElASelect {
-    div: HTMLDivElement
+interface ElASelect extends ElBase {
     select: HTMLSelectElement
     option: HTMLOptionElement[]
 }
 
-interface ElAOption {
+interface ElAOption extends ElBase  {
     // TODO
 }
 
 type ChildOfAForm<T extends AForm> =
     T extends AForm<infer Child> ? Child : never;
 
-interface ElAForm<Child extends Record<string, ABase> = Record<string, ABase>> {
-    div: HTMLDivElement
+interface ElAForm<Child extends Record<string, ABase> = Record<string, ABase>> extends ElBase {
     child: {
         [K in keyof Child]: AMap[Child[K]["type"]][1]
     }
