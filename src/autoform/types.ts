@@ -22,7 +22,9 @@ interface ElASelect extends ElBase {
 }
 
 interface ElAOption extends ElBase  {
-    // TODO
+    label: HTMLLabelElement
+    input: HTMLInputElement
+    i: HTMLElement
 }
 
 type ChildOfAForm<T extends AForm> =
@@ -73,7 +75,7 @@ interface ASelect extends ABase {
 
 interface AOption extends ABase {
     type: 'option'
-    value: string
+    label: string
 }
 
 interface AForm<Child extends Record<string, ABase> = Record<string, ABase>> extends ABase {

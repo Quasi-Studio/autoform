@@ -1,4 +1,4 @@
-import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput } from "./types"
+import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput, AOption, ElAOption, isAOption } from "./types"
 
 function inject_string(template: AInput): ElAInput {
     let div = document.createElement('div')
@@ -42,11 +42,34 @@ function inject_select(template: ASelect): ElASelect {
     }
 }
 
+function inject_option(template: AOption): ElAOption {
+    let div = document.createElement('div')
+    
+    let label = document.createElement('label')
+    label.classList.add('mdui-checkbox')
+    div.appendChild(label)
+    label.innerText = template.label
+
+    let input = document.createElement('input')
+    input.setAttribute('type', 'checkbox')
+    label.appendChild(input)
+
+    let i = document.createElement('i')
+    i.classList.add('mdui-checkbox-icon')
+    label.appendChild(i)
+
+    return {
+        div, label, input, i
+    }
+}
+
 function inject<T extends ABase>(template: T): ElTree<T> {
     if (isAInput(template))
         return inject_string(template)
     if (isASelect(template))
         return inject_select(template)
+    if (isAOption(template))
+        return inject_option(template)
     throw new Error('Not implemented')
 }
 
