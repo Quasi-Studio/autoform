@@ -1,4 +1,4 @@
-import { ABase, ACheckbox, AForm, AInput, ASelect, ElACheckbox, ElAForm, ElAInput, ElASelect, ElBase, ReturnValue, isACheckbox, isAForm, isAInput, isASelect } from "./types";
+import { ABase, ACheckbox, AForm, AInput, ASelect, ElACheckbox, ElAForm, ElAInput, ElASelect, ElBase, ReturnValue, isACheckbox, isAForm, isAInput, isASelect } from "./types.js";
 
 function value_input(el: ElAInput, _: AInput): string {
     return el.input.value

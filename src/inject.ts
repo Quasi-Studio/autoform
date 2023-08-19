@@ -1,4 +1,4 @@
-import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput, ACheckbox, ElACheckbox, isACheckbox, AForm, ElAForm, isAForm } from "./types"
+import { ABase, ASelect, AInput, ElASelect, ElAInput, ElTree, isASelect, isAInput, ACheckbox, ElACheckbox, isACheckbox, AForm, ElAForm, isAForm } from "./types.js"
 
 function inject_input(template: AInput): ElAInput {
     let div = document.createElement('div')

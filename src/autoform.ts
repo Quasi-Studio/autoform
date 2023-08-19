@@ -1,8 +1,7 @@
 import mdui from "mdui";
-import { ABase, ElTree, ReturnValue } from "./types";
-import { inject } from "./inject";
-import { value } from "./value";
-// import { ElTree } from "./el";
+import { ABase, ElTree, ReturnValue } from "./types.js";
+import { inject } from "./inject.js";
+import { value } from "./value.js";
 
 class AutoForm<T extends ABase> {
     readonly template: T
