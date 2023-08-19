@@ -1,24 +1,28 @@
 import mdui from "mdui";
-import { ABase } from "./types";
+import { ABase, ElTree, ReturnValue } from "./types";
 import { inject } from "./inject";
+import { value } from "./value";
 // import { ElTree } from "./el";
 
 class AutoForm<T extends ABase> {
     readonly template: T
-    // el_tree: ElTree<T>
+    // @ts-ignore
+    el_tree: ElTree<T>
 
     constructor (template: T) {
         this.template = template
     }
 
     init(el: HTMLDivElement): void {
-        el.appendChild(inject(this.template).div)
+        this.el_tree = inject(this.template)
+        el.appendChild(this.el_tree.div)
         mdui.mutation()
+        console.log(this.el_tree)
     }
 
-    // value(): ReturnValue<T> {
-    //     return {}
-    // }
+    value(): ReturnValue<T> {
+        return value(this.el_tree, this.template)
+    }
 }
 
 export {

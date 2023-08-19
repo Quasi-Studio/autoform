@@ -71,11 +71,11 @@ function inject_form<T extends Record<string, ABase>>(template: AForm<T>): ElAFo
 
     for (let el in template.child) {
         let s_div = document.createElement('div')
-        s_div.classList.add('md-form-item')
+        s_div.classList.add('md-form-group')
         div.appendChild(s_div)
 
         let label = document.createElement('label')
-        label.classList.add('mdui-label')
+        label.classList.add('md-input-container')
         if (template.child[el].caption)
             label.innerText = template.child[el].caption!
         s_div.appendChild(label)

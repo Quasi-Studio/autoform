@@ -55,6 +55,7 @@ export type {
     ElACheckbox,
     ElAForm,
     ElAElement,
+    ElBase,
     ElTree
 }
 

@@ -30,9 +30,11 @@ let af = new AutoForm({
   type: 'form',
   child: {
     input1: {
+      caption: 'Input 1',
       type: 'input'
     },
     checkbox1: {
+      caption: 'Checkbox 1',
       type: 'checkbox',
       label: '123'
     }
@@ -40,6 +42,14 @@ let af = new AutoForm({
 })
 
 af.init(document.getElementById('apppppp') as HTMLDivElement)
+
+function foo() {
+  console.log(af.value())
+}
+
+setInterval(() => {
+  foo()
+}, 1000);
 
 </script>
 
