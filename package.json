@@ -1,8 +1,14 @@
 {
-  "name": "autoform",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@quasi-dev/autoform",
+  "version": "0.0.1",
   "type": "module",
+  "license": "MIT",
+  "description": "A simple form generator",
+  "repository": "https://github.com/Quasi-Studio/autoform",
+  "author": "Zecyel",
+  "contributors": [
+    "_KermanX"
+  ],
   "scripts": {
     "build": "tsc"
   },
