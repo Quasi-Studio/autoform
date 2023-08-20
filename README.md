@@ -11,7 +11,7 @@ npm i @quasi-dev/autoform
 ## Demo
 
 ```typescript
-import { autoForm } from '@quasi-dev/autoform'
+import { AutoForm } from '@quasi-dev/autoform'
 const af = AutoForm({
     type: 'input',
     hint: 'Input a string.'
@@ -23,4 +23,4 @@ af.init(document.getElementById('root'))
 
 [Api](./doc/api.md)
 
-[表单JSON格式](./doc/form.md)
+[JSON模板格式](./doc/template.md)
