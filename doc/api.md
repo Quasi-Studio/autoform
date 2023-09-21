@@ -9,7 +9,7 @@
 示例代码：
 
 ```ts
-const af = AutoForm({
+const af = new AutoForm({
     type: 'input',
     hint: 'Input a string.'
 })
@@ -24,7 +24,7 @@ const af = AutoForm({
 示例代码：
 
 ```ts
-af.init(document.getElementById('form'))
+af.init(document.getElementById('form') as HTMLDivElement)
 ```
 
 ## 获取表单数据

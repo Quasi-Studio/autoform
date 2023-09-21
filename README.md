@@ -12,11 +12,11 @@ npm i @quasi-dev/autoform
 
 ```typescript
 import { AutoForm } from '@quasi-dev/autoform'
-const af = AutoForm({
+const af = new AutoForm({
     type: 'input',
     hint: 'Input a string.'
 })
-af.init(document.getElementById('root'))
+af.init(document.getElementById('root') as HTMLDivElement)
 ```
 
 ## 文档
