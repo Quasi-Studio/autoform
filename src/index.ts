@@ -1,5 +1,2 @@
-import { AutoForm } from "./autoform";
-
-export {
-    AutoForm
-}
+export * from './component/base'
+export * from './component/input'

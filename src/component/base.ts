@@ -1,17 +1,28 @@
 abstract class ComponentModel<MsgType> {
-    abstract update(...args: any[]): any[]
+    abstract update(...args: any[]): MsgType[]
 }
 
 abstract class ComponentBase<Model extends ComponentModel<MsgType>, MsgType> {
     el: HTMLDivElement
 
-    constructor(public value: Model) {}
-
-    public patch(...args: any[]): any[] {
-        return this.value.update(...args)
+    constructor(public model: Model) {
+        this.el = document.createElement('div')
     }
 
-    public abstract mount(): void
+    public patch(...args: any[]): void {
+        let upd = this.model.update(...args)
+        for (let i of upd) {
+            this.update(i)
+        }
+    }
+
+    public abstract mount(el: HTMLDivElement): void
 
     protected abstract update(msg: MsgType): void
+}
+
+
+export {
+    ComponentModel,
+    ComponentBase
 }
