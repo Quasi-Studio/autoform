@@ -25,6 +25,10 @@ class AInputModel extends ComponentModel<AInputMsgType> {
             ret.push('place_holder')
         }
 
+        if (p.onchange !== undefined) {
+            this.onchange = p.onchange
+        }
+
         return ret
     }
 }
@@ -54,7 +58,7 @@ class AInput extends ComponentBase<AInputModel, AInputMsgType> {
 
         this.input_el.addEventListener('input', (_: Event) => {
             this.model.val = this.input_el.value
-            console.log(this.input_el.value)
+            this.model.onchange()
         })
         el.appendChild(this.el)
     }
