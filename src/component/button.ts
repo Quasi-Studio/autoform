@@ -30,10 +30,6 @@ class AButton extends ComponentBase<AButtonModel, AButtonMsgType> {
 
     button_el: HTMLButtonElement
 
-    constructor(model: AButtonModel) {
-        super(model)
-    }
-
     mount(el: HTMLDivElement): void {
         this.button_el = document.createElement('button')
         this.button_el.classList.add('mdui-btn')

@@ -38,10 +38,6 @@ class AInput extends ComponentBase<AInputModel, AInputMsgType> {
     label_el: HTMLLabelElement
     input_el: HTMLInputElement
 
-    constructor(model: AInputModel) {
-        super(model)
-    }
-
     mount(el: HTMLDivElement): void {
         this.el.classList.add('mdui-textfield')
         this.el.classList.add('mdui-textfield-floating-label')
