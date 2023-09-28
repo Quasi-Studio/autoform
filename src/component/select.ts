@@ -20,7 +20,9 @@ class ASelectModel extends ComponentModel<ASelectMsgType> {
             this.options = (p.options as Array<string>).filter(() => true)
             ret.push('options')
         }
-
+        if (p.onchange !== undefined) {
+            this.onchange = p.onchange
+        }
         return ret
     }
 }
@@ -29,7 +31,7 @@ class ASelect extends ComponentBase<ASelectModel, ASelectMsgType> {
     
     select_el: HTMLSelectElement
     option_el: HTMLOptionElement[] = []
-    mdui_select_obj: Select
+    mdui_select_obj: any
 
     mount(el: HTMLDivElement): void {
         this.select_el = document.createElement('select')
