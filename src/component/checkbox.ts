@@ -10,25 +10,18 @@ class ACheckboxModel extends ComponentModel<ACheckboxMsgType> {
     label: string = ''
     onchange: () => void = () => {}
 
-    constructor (p: any) {
-        super()
-        this.update(p)
-    }
-
-    update(p: any): ACheckboxMsgType[] { // I know its better to have a callback func
-        let ret = [] as ACheckboxMsgType[]
-        if (p.value !== undefined) {
-            this.value = p.value
-            ret.push('value')
+    update(payload: any, forward: (msg: ACheckboxMsgType) => void): void {
+        if (payload.value !== undefined) {
+            this.value = payload.value
+            forward('value')
         }
-        if (p.label !== undefined) {
-            this.label = p.label
-            ret.push('label')
+        if (payload.label !== undefined) {
+            this.label = payload.label
+            forward('label')
         }
-        if (p.onchange !== undefined) {
-            this.onchange = p.onchange
+        if (payload.onchange !== undefined) {
+            this.onchange = payload.onchange
         }
-        return ret
     }
 }
 

@@ -9,21 +9,14 @@ class ASelectModel extends ComponentModel<ASelectMsgType> {
     value: string = ''
     onchange: () => void = () => {} // after change
 
-    constructor (p: any) {
-        super()
-        this.update(p)
-    }
-
-    update(p: any): ASelectMsgType[] {
-        let ret = [] as ASelectMsgType[]
-        if (p.options !== undefined) {
-            this.options = (p.options as Array<string>).filter(() => true)
-            ret.push('options')
+    update(payload: any, forward: (msg: ASelectMsgType) => void): void {
+        if (payload.options !== undefined) {
+            this.options = (payload.options as Array<string>).filter(() => true)
+            forward('options')
         }
-        if (p.onchange !== undefined) {
-            this.onchange = p.onchange
+        if (payload.onchange !== undefined) {
+            this.onchange = payload.onchange
         }
-        return ret
     }
 }
 

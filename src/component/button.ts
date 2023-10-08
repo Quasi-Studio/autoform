@@ -7,22 +7,15 @@ class AButtonModel extends ComponentModel<AButtonMsgType> {
     caption: string = ''
     onclick: () => void = () => {}
 
-    constructor (p: any) {
-        super()
-        this.update(p)
-    }
-
-    update(p: any): AButtonMsgType[] {
-        let ret = [] as AButtonMsgType[]
-        if (p.caption !== undefined) {
-            this.caption = p.caption
-            ret.push('caption')
+    update(payload: any, forward: (msg: AButtonMsgType) => void): void {
+        if (payload.caption !== undefined) {
+            this.caption = payload.caption
+            forward('caption')
         }
 
-        if (p.onclick !== undefined) {
-            this.onclick = p.onclick
+        if (payload.onclick !== undefined) {
+            this.onclick = payload.onclick
         }
-        return ret
     }
 }
 

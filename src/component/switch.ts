@@ -9,21 +9,14 @@ class ASwitchModel extends ComponentModel<ASwitchMsgType> {
     value: ASwitchStatus = 'off'
     onchange: () => void = () => {}
 
-    constructor (p: any) {
-        super()
-        this.update(p)
-    }
-
-    update(p: any): ASwitchMsgType[] {
-        let ret = [] as ASwitchMsgType[]
-        if (p.value !== undefined) {
-            this.value = p.value
-            ret.push('value')
+    update(payload: any, forward: (msg: ASwitchMsgType) => void): void {
+        if (payload.value !== undefined) {
+            this.value = payload.value
+            forward('value')
         }
-        if (p.onchange !== undefined) {
-            this.onchange = p.onchange
+        if (payload.onchange !== undefined) {
+            this.onchange = payload.onchange
         }
-        return ret
     }
 }
 
