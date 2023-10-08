@@ -1,6 +1,6 @@
 {
   "name": "@quasi-dev/autoform",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "license": "MIT",
   "description": "A simple form generator",
@@ -10,7 +10,8 @@
     "_KermanX"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "publish": "npm publish --access=public"
   },
   "dependencies": {
     "mdui": "^1.0.2"
@@ -18,8 +19,7 @@
   "devDependencies": {
     "typescript": "^5.0.2"
   },
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "main": "./src/index.ts",
   "files": [
     "dist/src",
     "README.md",
@@ -28,8 +28,7 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/src/index.d.ts",
-        "default": "./dist/src/index.js"
+        "default": "./src/index.ts"
       }
     }
   }

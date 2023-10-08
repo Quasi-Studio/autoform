@@ -6,6 +6,7 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "strictPropertyInitialization": false,
     // "moduleResolution": "NodeNext",
 
     "composite": true,
@@ -20,7 +21,7 @@
     "outDir": "dist"
   },
   "include": [
-    "src/*"
+    "src/**/*"
   ],
   "exclude": ["node_modules"]
 }

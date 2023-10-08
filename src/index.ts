@@ -1,5 +1,6 @@
-import { AutoForm } from "./autoform";
-
-export {
-    AutoForm
-}
+export * from './component/base'
+export * from './component/input'
+export * from './component/button'
+export * from './component/select'
+export * from './component/checkbox'
+export * from './component/switch'
