@@ -1,6 +1,6 @@
 # Quasi-dev/autoform
 
-A package that automatically generates forms from a schema.
+A package.
 
 ## 快速开始
 
