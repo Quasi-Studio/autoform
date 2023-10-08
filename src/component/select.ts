@@ -1,6 +1,6 @@
 
 import mdui from "mdui"
-import { ComponentBase, ComponentModel } from ".."
+import { ComponentBase, ComponentModel } from "./base"
 
 type ASelectMsgType = 'options'
 
