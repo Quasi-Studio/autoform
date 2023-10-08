@@ -1,25 +1,12 @@
 import mdui from "mdui"
 import { ComponentBase, ComponentModel } from "./base"
 
-type AButtonMsgType = 'caption'
-
-class AButtonModel extends ComponentModel<AButtonMsgType> {
+class AButtonModel extends ComponentModel {
     caption: string = ''
     onclick: () => void = () => {}
-
-    update(payload: any, forward: (msg: AButtonMsgType) => void): void {
-        if (payload.caption !== undefined) {
-            this.caption = payload.caption
-            forward('caption')
-        }
-
-        if (payload.onclick !== undefined) {
-            this.onclick = payload.onclick
-        }
-    }
 }
 
-class AButton extends ComponentBase<AButtonModel, AButtonMsgType> {
+class AButton extends ComponentBase<AButtonModel> {
 
     button_el: HTMLButtonElement
 
@@ -28,7 +15,8 @@ class AButton extends ComponentBase<AButtonModel, AButtonMsgType> {
         this.button_el.classList.add('mdui-btn')
         this.button_el.classList.add('mdui-btn-raised')
         this.button_el.classList.add('mdui-ripple')
-        this.update('caption')
+        
+        this.caption = this.model.caption
         this.el.appendChild(this.button_el)
 
         this.button_el.addEventListener('click', (_) => {
@@ -38,12 +26,24 @@ class AButton extends ComponentBase<AButtonModel, AButtonMsgType> {
         el.appendChild(this.el)
     }
 
-    update(msg: AButtonMsgType): void {
-        if (msg === 'caption') {
-            this.button_el.innerText = this.model.caption
-        }
+    get onclick(): () => void {
+        return this.model.onclick
+    }
+
+    set onclick(fn: () => void) {
+        this.model.onclick = fn
+    }
+
+    get caption(): string {
+        return this.model.caption
+    }
+
+    set caption(caption: string) {
+        this.model.caption = caption
+        this.button_el.innerText = this.model.caption
         mdui.mutation()
     }
+
 }
 
 export {
