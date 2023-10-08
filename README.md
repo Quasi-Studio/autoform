@@ -1,6 +1,6 @@
 # Quasi-dev/autoform
 
-A package that automatically generates forms from a schema.
+A package.
 
 ## 快速开始
 
@@ -11,16 +11,17 @@ npm i @quasi-dev/autoform
 ## Demo
 
 ```typescript
-import { AutoForm } from '@quasi-dev/autoform'
-const af = new AutoForm({
-    type: 'input',
-    hint: 'Input a string.'
+import { AButton, AButtonModel } from '@quasi-dev/autoform'
+
+let el = document.getElementById('root') as HTMLDivElement
+
+let btn = new AButton(new AButtonModel())
+btn.mount(el)
+btn.patch({
+  caption: '123'
 })
-af.init(document.getElementById('root') as HTMLDivElement)
 ```
 
 ## 文档
 
-[Api](./doc/api.md)
-
-[JSON模板格式](./doc/template.md)
+暂缺
