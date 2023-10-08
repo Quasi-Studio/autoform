@@ -1,5 +1,5 @@
 abstract class ComponentModel<MsgType> {
-    abstract update(o: any, forward: (msg: MsgType) => void): void
+    abstract update(payload: any, forward: (msg: MsgType) => void): void
 }
 
 abstract class ComponentBase<Model extends ComponentModel<MsgType>, MsgType> {
@@ -11,8 +11,8 @@ abstract class ComponentBase<Model extends ComponentModel<MsgType>, MsgType> {
         // this.model = new componentModelCtor()
     }
 
-    public patch(o: any): void {
-        this.model.update(o, this.update.bind(this))
+    public patch(payload: any): void {
+        this.model.update(payload, this.update.bind(this))
     }
 
     public abstract mount(el: HTMLDivElement): void

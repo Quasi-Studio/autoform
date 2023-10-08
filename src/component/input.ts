@@ -8,28 +8,18 @@ class AInputModel extends ComponentModel<AInputMsgType> {
     place_holder: string = ''
     onchange: () => void = () => {}
 
-    constructor (p: any) {
-        super()
-        this.update(p)
-    }
-
-    update(p: any): AInputMsgType[] {
-        let ret = [] as AInputMsgType[]
-        if (p.val !== undefined) {
-            this.val = p.val
-            ret.push('val')
+    update(payload: any, forward: (msg: AInputMsgType) => void): void {
+        if (payload.val !== undefined) {
+            this.val = payload.val
+            forward('val')
         }
-
-        if (p.place_holder !== undefined) {
-            this.place_holder = p.place_holder
-            ret.push('place_holder')
+        if (payload.place_holder !== undefined) {
+            this.place_holder = payload.place_holder
+            forward('place_holder')
         }
-
-        if (p.onchange !== undefined) {
-            this.onchange = p.onchange
+        if (payload.onchange !== undefined) {
+            this.onchange = payload.onchange
         }
-
-        return ret
     }
 }
 
