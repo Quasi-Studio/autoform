@@ -40,7 +40,7 @@ class AButton extends ComponentBase<AButtonModel> {
 
     set caption(caption: string) {
         this.model.caption = caption
-        this.button_el.innerText = this.model.caption
+        this.button_el.innerText = caption
         mdui.mutation()
     }
 

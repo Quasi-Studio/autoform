@@ -1,31 +1,15 @@
 import mdui from "mdui"
 import { ComponentBase, ComponentModel } from "./base"
 
-type ACheckboxMsgType = 'value' | 'label'
-
 type ACheckboxStatus = 'checked' | 'unchecked' // | 'partial'
 
-class ACheckboxModel extends ComponentModel<ACheckboxMsgType> {
+class ACheckboxModel extends ComponentModel {
     value: ACheckboxStatus = 'unchecked'
     label: string = ''
     onchange: () => void = () => {}
-
-    update(payload: any, forward: (msg: ACheckboxMsgType) => void): void {
-        if (payload.value !== undefined) {
-            this.value = payload.value
-            forward('value')
-        }
-        if (payload.label !== undefined) {
-            this.label = payload.label
-            forward('label')
-        }
-        if (payload.onchange !== undefined) {
-            this.onchange = payload.onchange
-        }
-    }
 }
 
-class ACheckbox extends ComponentBase<ACheckboxModel, ACheckboxMsgType> {
+class ACheckbox extends ComponentBase<ACheckboxModel> {
 
     label_el: HTMLLabelElement
     input_el: HTMLInputElement
@@ -45,10 +29,10 @@ class ACheckbox extends ComponentBase<ACheckboxModel, ACheckboxMsgType> {
         this.label_el.appendChild(this.i_el)
         
         this.label_el.appendChild(new Text(this.model.label))
-        this.update('value')
+        
+        this.value = this.model.value
         this.input_el.addEventListener('change', () => {
             this.model.value = this.input_el.checked ? 'checked': 'unchecked'
-            this.update('value')
             this.model.onchange()
         } )
         this.el.appendChild(this.label_el)
@@ -56,20 +40,33 @@ class ACheckbox extends ComponentBase<ACheckboxModel, ACheckboxMsgType> {
         el.appendChild(this.el)
     }
 
-    update(msg: ACheckboxMsgType): void {
-        if (msg === 'label') {
-            // this.label_el.textContent = this.model.label
-            // this.label_el.appendChild(new Text(this.model.label))
-            (this.label_el.lastChild as Text).textContent = this.model.label
-            // this.label_el.appendChild(this.input_el)
-            // this.label_el.appendChild(this.i_el)
-            return
-        }
-        if (msg === 'value') {
-            this.input_el.checked = this.model.value === 'checked'
-        }
+    get value(): ACheckboxStatus {
+        return this.model.value
+    }
+
+    set value(val: ACheckboxStatus) {
+        this.model.value = val
+        this.input_el.checked = val === 'checked'
         mdui.mutation()
     }
+
+    get label(): string {
+        return this.model.label
+    }
+
+    set label(val: string) {
+        this.model.label = val;  // I dislike this semicolon
+        (this.label_el.lastChild as Text).textContent = val
+    }
+
+    get onchange(): () => void {
+        return this.model.onchange
+    }
+
+    set onchange(fn: () => void) {
+        this.model.onchange = fn
+    }
+
 }
 
 export {
