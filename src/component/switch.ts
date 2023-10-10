@@ -1,26 +1,14 @@
 import mdui from "mdui"
 import { ComponentBase, ComponentModel } from "./base"
 
-type ASwitchMsgType = 'value'
-
 type ASwitchStatus = 'off' | 'on'
 
-class ASwitchModel extends ComponentModel<ASwitchMsgType> {
+class ASwitchModel extends ComponentModel {
     value: ASwitchStatus = 'off'
     onchange: () => void = () => {}
-
-    update(payload: any, forward: (msg: ASwitchMsgType) => void): void {
-        if (payload.value !== undefined) {
-            this.value = payload.value
-            forward('value')
-        }
-        if (payload.onchange !== undefined) {
-            this.onchange = payload.onchange
-        }
-    }
 }
 
-class ASwitch extends ComponentBase<ASwitchModel, ASwitchMsgType> {
+class ASwitch extends ComponentBase<ASwitchModel> {
 
     label_el: HTMLLabelElement
     input_el: HTMLInputElement
@@ -38,10 +26,9 @@ class ASwitch extends ComponentBase<ASwitchModel, ASwitchMsgType> {
         this.i_el.classList.add('mdui-switch-icon')
         this.label_el.appendChild(this.i_el)
         
-        this.update('value')
+        this.value = this.model.value
         this.input_el.addEventListener('change', () => {
             this.model.value = this.input_el.checked ? 'on': 'off'
-            this.update('value')
             this.model.onchange()
         } )
         this.el.appendChild(this.label_el)
@@ -49,11 +36,22 @@ class ASwitch extends ComponentBase<ASwitchModel, ASwitchMsgType> {
         el.appendChild(this.el)
     }
 
-    update(msg: ASwitchMsgType): void {
-        if (msg === 'value') {
-            this.input_el.checked = this.model.value === 'on'
-        }
+    get value(): ASwitchStatus {
+        return this.model.value
+    }
+
+    set value(value: ASwitchStatus) {
+        this.model.value = value
+        this.input_el.checked = this.model.value === 'on'
         mdui.mutation()
+    }
+
+    get onchange(): () => void {
+        return this.model.onchange
+    }
+
+    set onchange(fn: () => void) {
+        this.model.onchange = fn
     }
 }
 
